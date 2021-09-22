@@ -31,8 +31,6 @@ The videos are copyrighted and all rights are reserved.
 
 <hr>
 
-<img src="img/nsf-logo.svg" alt="NSF logo" width="300">
-
 Part of this work is supported by NSF HDR DSC award #2123366
 
 
