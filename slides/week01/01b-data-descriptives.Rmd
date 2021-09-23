@@ -1,0 +1,558 @@
+---
+title: "Describing Data with Numbers"
+author: "Dr. Mine Dogucu"
+output: 
+  xaringan::moon_reader:
+    css: slide-style.css
+    seal: false
+    nature:
+      ratio: 16:9
+      highlightStyle: "pygments"
+      highlightLines: true
+      highlightLanguage: "r"
+---
+
+class: title-slide
+
+```{r child = "../setup.Rmd"}
+```
+
+<br>
+<br>
+.right-panel[ 
+
+# `r rmarkdown::metadata$title`
+## `r rmarkdown::metadata$author`
+]
+
+---
+
+class: middle
+
+## Review
+
+Quiz questions
+
+---
+
+class: middle
+
+## Outline
+
+- Introduction to Data
+
+- Variable Types
+
+- Describing Data with Numbers
+
+---
+
+class: middle
+
+
+## Data Frames 
+
+
+```{r echo = FALSE, message=FALSE}
+library(magrittr)
+library(dplyr)
+library(fivethirtyeight)
+library(openintro)
+library(tidyverse)
+library(DiagrammeR)
+library(DiagrammeRsvg)
+library(rsvg)
+
+data(bad_drivers)
+candy_rankings <- candy_rankings %>% 
+  select(competitorname, chocolate, fruity, sugarpercent, pricepercent, winpercent)
+```
+
+[Dear Mona, Which State Has the Worst Drivers?](https://fivethirtyeight.com/features/which-state-has-the-worst-drivers/)
+
+---
+
+## Data Frame `bad_driver`  
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/data-matrix.png')
+knitr::include_graphics('img/data-matrix-tail.png')
+```
+
+---
+
+## Data Frame `bad_driver`  
+
+- The data frame has 8 __variables__ (`state`, `num_drivers`, `perc_speeding`, `perc_not_distracted`, `perc_no_previous`, `insurance_premiums`, `losses`). 
+
+- The data frame has 51 __cases__. Each case represents a US state (or District of Columbia). 
+
+---
+
+class: inverse center middle
+
+.font100[functions for data frames]
+
+---
+
+class: middle
+
+```{r}
+head(bad_drivers)
+```
+
+---
+
+class: middle
+
+```{r}
+tail(bad_drivers)
+```
+
+---
+
+class: middle
+
+```{r}
+glimpse(bad_drivers)
+```
+
+---
+
+class: middle
+
+```{r}
+ncol(bad_drivers)
+```
+
+---
+
+class: middle
+
+```{r}
+nrow(bad_drivers)
+```
+
+---
+
+class: center
+
+## Getting to Know the Data Frame in Action
+
+<video width="80%" height="45%%" align = "center" controls>
+  <source src="screencast/01i-data-interface.mp4" type="video/mp4">
+</video>
+
+---
+
+class: middle 
+
+## Data Frame for You to Try Out `candy_rankings`
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/data-candy.png')
+knitr::include_graphics('img/data-candy-tail.png')
+```
+
+---
+
+class: center middle
+
+## Bob Ross
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zIbR5TAz2xQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+---
+
+class: middle
+
+```{r}
+glimpse(bob_ross)
+```
+
+---
+
+class: middle
+
+class: center middle 
+
+
+##`candy_rankings` vs `bob_ross`
+
+False - 0  
+True - 1
+
+---
+
+class: middle
+
+
+
+## Variables
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/data-candy.png')
+knitr::include_graphics('img/data-candy-tail.png')
+```
+
+---
+
+class: middle
+
+```{r echo = FALSE, fig.align='center'}
+diagram_small <- grViz("
+    digraph {
+        # graph aesthetics
+        graph [ranksep = 0.3]
+        # node definitions with substituted label text
+        1 [label = 'Variables']
+        2 [label = 'Categorical']
+        3 [label = 'Numeric']
+        
+        # edge definitions with the node IDs
+        1 -> 2
+        1 -> 3
+    }
+")
+tmp <- capture.output(rsvg_png(charToRaw(export_svg(diagram_small)),'img/diagram_small.png'))
+knitr::include_graphics("img/diagram_small.png") 
+```
+
+---
+
+class: middle
+
+## Variables
+
+Variables `n_kids` (number of kids), `height`, and `winpercent` are __numerical variables__. 
+
+--
+
+We can do certain analyses using these variables such as finding an average `winpercent` or the maximum or minimum `winpercent`.
+
+--
+
+Not everything represented by numbers represents a numeric quantity. e.g. Student ID, cell phone number.
+
+---
+
+## Variables
+
+Variables such as `chocolate`, `fruity`, and `class_year` (first-year, sophomore, junior, senior) are __categorical variables__. 
+
+--
+
+Categorical variables have __levels__. For instance `chocolate` and `fruity` both have two levels as `TRUE` and `FALSE` and `class_year` have four levels.
+
+---
+
+class: middle
+
+```{r}
+glimpse(candy_rankings)
+```
+
+---
+
+class: middle
+
+```{r}
+glimpse(mariokart)
+```
+
+---
+
+
+class: middle
+
+`character`: takes string values (e.g. a person's name, address)  
+--
+
+`integer`: integer (single precision)  
+--
+
+`double`: floating decimal (double precision)   
+--
+
+`numeric`: integer or double  
+--
+
+`factor`: categorical variables with different levels  
+--
+
+`logical`: TRUE (1), FALSE (0)  
+
+---
+
+class: inverse middle
+
+As a data scientist it is .font30[**your**] job to check the type(s) of data that you are working with. Do .font30[**not**]  assume you will work with clean data frames, with clean names, labels, and types.
+
+---
+
+```{r echo = FALSE}
+library(titanic)
+```
+
+```{r}
+glimpse(titanic_train)
+```
+
+
+---
+
+class: middle center inverse
+
+.font75[Describing Data with Numbers]
+
+---
+
+class: middle
+
+Categorical data are summarized with **counts** or **proportions**
+
+---
+
+class: middle
+
+```{r echo = FALSE, message = FALSE}
+lapd <- 
+  read_csv(here::here("slides/data/Police_Payroll.csv")) %>% 
+  janitor::clean_names() %>% 
+  filter(year == 2018) %>% 
+  select(job_class_title, 
+         employment_type, 
+         base_pay) %>% mutate(employment_type = as.factor(employment_type),
+           job_class_title = as.factor(job_class_title),
+           base_pay_level = case_when(
+             base_pay < 0 ~ "Less than 0", 
+             base_pay == 0 ~ "No Income",
+             base_pay < 62474 & base_pay > 0 ~ "Less than Median, Greater than 0",
+             base_pay > 62474 ~ "Greater than Median")) 
+```
+
+
+```{r}
+glimpse(lapd)
+```
+
+---
+
+class: middle
+
+```{r}
+lapd %>% 
+  count(employment_type)
+```
+
+
+---
+
+class: middle
+
+```{r}
+lapd %>% 
+  count(employment_type) %>% 
+  mutate(prop = n/sum(n))
+```
+
+
+---
+
+class: middle
+
+```{r}
+count(lapd, job_class_title)
+```
+
+
+---
+
+class: middle
+
+```{r}
+count(lapd, job_class_title, sort = TRUE)
+```
+
+---
+
+class: middle
+
+## Review
+
+**mean** average
+
+**median** the middle value when the data are ordered
+
+**mode** value that appears the most often (local maxima for continous variables)
+
+**minimum** the lowest value
+
+**maximum** the highest value
+
+---
+class: middle
+## Mean
+
+.pull-left[
+```{r}
+summarize(lapd, 
+          mean(base_pay))
+```
+]
+
+--
+
+.pull-right[
+
+```{r}
+mean(lapd$base_pay)
+```
+
+]
+
+---
+
+class: middle
+## Median
+
+.pull-left[
+```{r}
+summarize(lapd, 
+          median(base_pay))
+```
+]
+
+--
+
+.pull-right[
+
+```{r}
+median(lapd$base_pay)
+```
+
+]
+
+---
+class: middle
+
+## Minimum
+
+.pull-left[
+```{r}
+summarize(lapd, 
+          min(base_pay))
+```
+]
+
+--
+
+.pull-right[
+
+```{r}
+min(lapd$base_pay)
+```
+
+]
+
+--
+
+
+
+.footnote[
+In a similar fashion maxiumum can be found by using the `max()` function.
+]
+
+---
+
+
+class: middle
+
+## Quantiles / Percentiles / Quartiles
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-7rfc{border-color:inherit;font-family:Arial, Helvetica, sans-serif !important;;font-size:28px;text-align:left;
+  vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-7rfc">Quantile</th>
+    <th class="tg-7rfc">Percentile</th>
+    <th class="tg-7rfc">Special Name</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-7rfc">0.25</td>
+    <td class="tg-7rfc">25th</td>
+    <td class="tg-7rfc">First quartile</td>
+  </tr>
+  <tr>
+    <td class="tg-7rfc">0.5</td>
+    <td class="tg-7rfc">50th</td>
+    <td class="tg-7rfc">Median</td>
+  </tr>
+  <tr>
+    <td class="tg-7rfc">0.75</td>
+    <td class="tg-7rfc">75th</td>
+    <td class="tg-7rfc">Third quartile</td>
+  </tr>
+</tbody>
+</table>
+
+
+---
+
+
+## Quantiles
+
+```{r}
+summarize(lapd, quantile(base_pay, c(0.25, 0.50, 0.75)))
+```
+
+```{r echo = FALSE}
+q1 <- summarize(lapd, quantile(base_pay, c(0.25))) %>% 
+  pull()
+```
+
+
+We would expect 25% of the data to be less than `r q1`. 
+
+
+---
+
+
+class: middle 
+
+We can get multiple summaries with one `summarize()` function.
+
+```{r}
+summarize(lapd,
+          mean(base_pay),
+          median(base_pay))
+```
+
+Note how the variables names in this table is not easy to read. 
+
+---
+
+class: middle 
+
+In order to display the variable names more legibly in the output, we can assign variable names to numerical summaries (e.g. `mean_base_pay`).
+
+```{r}
+summarize(lapd,
+          mean_base_pay = mean(base_pay),
+          med_base_pay = median(base_pay))
+```
+
+
+
+

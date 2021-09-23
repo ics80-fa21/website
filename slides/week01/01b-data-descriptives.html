@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Describing Data with Numbers</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Mine Dogucu" />
+    <script src="01b-data-descriptives_files/header-attrs-2.10/header-attrs.js"></script>
+    <link rel="stylesheet" href="slide-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide
+
+
+
+
+
+&lt;br&gt;
+&lt;br&gt;
+.right-panel[ 
+
+# Describing Data with Numbers
+## Dr. Mine Dogucu
+]
+
+---
+
+class: middle
+
+## Review
+
+Quiz questions
+
+---
+
+class: middle
+
+## Outline
+
+- Introduction to Data
+
+- Variable Types
+
+- Describing Data with Numbers
+
+---
+
+class: middle
+
+
+## Data Frames 
+
+
+
+
+[Dear Mona, Which State Has the Worst Drivers?](https://fivethirtyeight.com/features/which-state-has-the-worst-drivers/)
+
+---
+
+## Data Frame `bad_driver`  
+
+&lt;img src="img/data-matrix.png" width="100%" style="display: block; margin: auto;" /&gt;&lt;img src="img/data-matrix-tail.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Data Frame `bad_driver`  
+
+- The data frame has 8 __variables__ (`state`, `num_drivers`, `perc_speeding`, `perc_not_distracted`, `perc_no_previous`, `insurance_premiums`, `losses`). 
+
+- The data frame has 51 __cases__. Each case represents a US state (or District of Columbia). 
+
+---
+
+class: inverse center middle
+
+.font100[functions for data frames]
+
+---
+
+class: middle
+
+
+```r
+head(bad_drivers)
+```
+
+```
+## # A tibble: 6 × 8
+##   state      num_drivers perc_speeding perc_alcohol perc_not_distra… perc_no_previous
+##   &lt;chr&gt;            &lt;dbl&gt;         &lt;int&gt;        &lt;int&gt;            &lt;int&gt;            &lt;int&gt;
+## 1 Alabama           18.8            39           30               96               80
+## 2 Alaska            18.1            41           25               90               94
+## 3 Arizona           18.6            35           28               84               96
+## 4 Arkansas          22.4            18           26               94               95
+## 5 California        12              35           28               91               89
+## 6 Colorado          13.6            37           28               79               95
+## # … with 2 more variables: insurance_premiums &lt;dbl&gt;, losses &lt;dbl&gt;
+```
+
+---
+
+class: middle
+
+
+```r
+tail(bad_drivers)
+```
+
+```
+## # A tibble: 6 × 8
+##   state         num_drivers perc_speeding perc_alcohol perc_not_distra… perc_no_previous
+##   &lt;chr&gt;               &lt;dbl&gt;         &lt;int&gt;        &lt;int&gt;            &lt;int&gt;            &lt;int&gt;
+## 1 Vermont              13.6            30           30               96               95
+## 2 Virginia             12.7            19           27               87               88
+## 3 Washington           10.6            42           33               82               86
+## 4 West Virginia        23.8            34           28               97               87
+## 5 Wisconsin            13.8            36           33               39               84
+## 6 Wyoming              17.4            42           32               81               90
+## # … with 2 more variables: insurance_premiums &lt;dbl&gt;, losses &lt;dbl&gt;
+```
+
+---
+
+class: middle
+
+
+```r
+glimpse(bad_drivers)
+```
+
+```
+## Rows: 51
+## Columns: 8
+## $ state               &lt;chr&gt; "Alabama", "Alaska", "Arizona", "Arkansas", "Calif…
+## $ num_drivers         &lt;dbl&gt; 18.8, 18.1, 18.6, 22.4, 12.0, 13.6, 10.8, 16.2, 5.…
+## $ perc_speeding       &lt;int&gt; 39, 41, 35, 18, 35, 37, 46, 38, 34, 21, 19, 54, 36…
+## $ perc_alcohol        &lt;int&gt; 30, 25, 28, 26, 28, 28, 36, 30, 27, 29, 25, 41, 29…
+## $ perc_not_distracted &lt;int&gt; 96, 90, 84, 94, 91, 79, 87, 87, 100, 92, 95, 82, 8…
+## $ perc_no_previous    &lt;int&gt; 80, 94, 96, 95, 89, 95, 82, 99, 100, 94, 93, 87, 9…
+## $ insurance_premiums  &lt;dbl&gt; 784.55, 1053.48, 899.47, 827.34, 878.41, 835.50, 1…
+## $ losses              &lt;dbl&gt; 145.08, 133.93, 110.35, 142.39, 165.63, 139.91, 16…
+```
+
+---
+
+class: middle
+
+
+```r
+ncol(bad_drivers)
+```
+
+```
+## [1] 8
+```
+
+---
+
+class: middle
+
+
+```r
+nrow(bad_drivers)
+```
+
+```
+## [1] 51
+```
+
+---
+
+class: center
+
+## Getting to Know the Data Frame in Action
+
+&lt;video width="80%" height="45%%" align = "center" controls&gt;
+  &lt;source src="screencast/01i-data-interface.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+
+---
+
+class: middle 
+
+## Data Frame for You to Try Out `candy_rankings`
+
+&lt;img src="img/data-candy.png" width="100%" style="display: block; margin: auto;" /&gt;&lt;img src="img/data-candy-tail.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: center middle
+
+## Bob Ross
+
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/zIbR5TAz2xQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+
+
+---
+
+class: middle
+
+
+```r
+glimpse(bob_ross)
+```
+
+```
+## Rows: 403
+## Columns: 71
+## $ episode            &lt;chr&gt; "S01E01", "S01E02", "S01E03", "S01E04", "S01E05", "…
+## $ season             &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, …
+## $ episode_num        &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3,…
+## $ title              &lt;chr&gt; "A WALK IN THE WOODS", "MT. MCKINLEY", "EBONY SUNSE…
+## $ apple_frame        &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ aurora_borealis    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ barn               &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ beach              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ boat               &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ bridge             &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ building           &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ bushes             &lt;int&gt; 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, …
+## $ cabin              &lt;int&gt; 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, …
+## $ cactus             &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ circle_frame       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ cirrus             &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, …
+## $ cliff              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ clouds             &lt;int&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, …
+## $ conifer            &lt;int&gt; 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, …
+## $ cumulus            &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, …
+## $ deciduous          &lt;int&gt; 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, …
+## $ diane_andre        &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ dock               &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ double_oval_frame  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ farm               &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ fence              &lt;int&gt; 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ fire               &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ florida_frame      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ flowers            &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ fog                &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ framed             &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ grass              &lt;int&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, …
+## $ guest              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ half_circle_frame  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ half_oval_frame    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ hills              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ lake               &lt;int&gt; 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, …
+## $ lakes              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ lighthouse         &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ mill               &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ moon               &lt;int&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ mountain           &lt;int&gt; 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, …
+## $ mountains          &lt;int&gt; 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, …
+## $ night              &lt;int&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ ocean              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, …
+## $ oval_frame         &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ palm_trees         &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ path               &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ person             &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ portrait           &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ rectangle_3d_frame &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ rectangular_frame  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ river              &lt;int&gt; 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ rocks              &lt;int&gt; 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ seashell_frame     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ snow               &lt;int&gt; 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, …
+## $ snowy_mountain     &lt;int&gt; 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, …
+## $ split_frame        &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ steve_ross         &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ structure          &lt;int&gt; 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, …
+## $ sun                &lt;int&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, …
+## $ tomb_frame         &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ tree               &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ trees              &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ triple_frame       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ waterfall          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ waves              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, …
+## $ windmill           &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ window_frame       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ winter             &lt;int&gt; 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ wood_framed        &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+```
+
+---
+
+class: middle
+
+class: center middle 
+
+
+##`candy_rankings` vs `bob_ross`
+
+False - 0  
+True - 1
+
+---
+
+class: middle
+
+
+
+## Variables
+
+&lt;img src="img/data-candy.png" width="100%" style="display: block; margin: auto;" /&gt;&lt;img src="img/data-candy-tail.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: middle
+
+&lt;img src="img/diagram_small.png" width="377" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: middle
+
+## Variables
+
+Variables `n_kids` (number of kids), `height`, and `winpercent` are __numerical variables__. 
+
+--
+
+We can do certain analyses using these variables such as finding an average `winpercent` or the maximum or minimum `winpercent`.
+
+--
+
+Not everything represented by numbers represents a numeric quantity. e.g. Student ID, cell phone number.
+
+---
+
+## Variables
+
+Variables such as `chocolate`, `fruity`, and `class_year` (first-year, sophomore, junior, senior) are __categorical variables__. 
+
+--
+
+Categorical variables have __levels__. For instance `chocolate` and `fruity` both have two levels as `TRUE` and `FALSE` and `class_year` have four levels.
+
+---
+
+class: middle
+
+
+```r
+glimpse(candy_rankings)
+```
+
+```
+## Rows: 85
+## Columns: 6
+## $ competitorname &lt;chr&gt; "100 Grand", "3 Musketeers", "One dime", "One quarter",…
+## $ chocolate      &lt;lgl&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FAL…
+## $ fruity         &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, …
+## $ sugarpercent   &lt;dbl&gt; 0.732, 0.604, 0.011, 0.011, 0.906, 0.465, 0.604, 0.313,…
+## $ pricepercent   &lt;dbl&gt; 0.860, 0.511, 0.116, 0.511, 0.511, 0.767, 0.767, 0.511,…
+## $ winpercent     &lt;dbl&gt; 66.97173, 67.60294, 32.26109, 46.11650, 52.34146, 50.34…
+```
+
+---
+
+class: middle
+
+
+```r
+glimpse(mariokart)
+```
+
+```
+## Rows: 143
+## Columns: 12
+## $ id          &lt;dbl&gt; 150377422259, 260483376854, 320432342985, 280405224677, 17…
+## $ duration    &lt;int&gt; 3, 7, 3, 3, 1, 3, 1, 1, 3, 7, 1, 1, 1, 1, 7, 7, 3, 3, 1, 7…
+## $ n_bids      &lt;int&gt; 20, 13, 16, 18, 20, 19, 13, 15, 29, 8, 15, 15, 13, 16, 6, …
+## $ cond        &lt;fct&gt; new, used, new, new, new, new, used, new, used, used, new,…
+## $ start_pr    &lt;dbl&gt; 0.99, 0.99, 0.99, 0.99, 0.01, 0.99, 0.01, 1.00, 0.99, 19.9…
+## $ ship_pr     &lt;dbl&gt; 4.00, 3.99, 3.50, 0.00, 0.00, 4.00, 0.00, 2.99, 4.00, 4.00…
+## $ total_pr    &lt;dbl&gt; 51.55, 37.04, 45.50, 44.00, 71.00, 45.00, 37.02, 53.99, 47…
+## $ ship_sp     &lt;fct&gt; standard, firstClass, firstClass, standard, media, standar…
+## $ seller_rate &lt;int&gt; 1580, 365, 998, 7, 820, 270144, 7284, 4858, 27, 201, 4858,…
+## $ stock_photo &lt;fct&gt; yes, yes, no, yes, yes, yes, yes, yes, yes, no, yes, yes, …
+## $ wheels      &lt;int&gt; 1, 1, 1, 1, 2, 0, 0, 2, 1, 1, 2, 2, 2, 2, 1, 0, 1, 1, 2, 2…
+## $ title       &lt;fct&gt; "~~ Wii MARIO KART &amp;amp; WHEEL ~ NINTENDO Wii ~ BRAND NEW …
+```
+
+---
+
+
+class: middle
+
+`character`: takes string values (e.g. a person's name, address)  
+--
+
+`integer`: integer (single precision)  
+--
+
+`double`: floating decimal (double precision)   
+--
+
+`numeric`: integer or double  
+--
+
+`factor`: categorical variables with different levels  
+--
+
+`logical`: TRUE (1), FALSE (0)  
+
+---
+
+class: inverse middle
+
+As a data scientist it is .font30[**your**] job to check the type(s) of data that you are working with. Do .font30[**not**]  assume you will work with clean data frames, with clean names, labels, and types.
+
+---
+
+
+
+
+```r
+glimpse(titanic_train)
+```
+
+```
+## Rows: 891
+## Columns: 12
+## $ PassengerId &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,…
+## $ Survived    &lt;int&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1…
+## $ Pclass      &lt;int&gt; 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 2, 3, 3…
+## $ Name        &lt;chr&gt; "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl…
+## $ Sex         &lt;chr&gt; "male", "female", "female", "female", "male", "male", "mal…
+## $ Age         &lt;dbl&gt; 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 39, 14, …
+## $ SibSp       &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 0, 1, 0…
+## $ Parch       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0…
+## $ Ticket      &lt;chr&gt; "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37…
+## $ Fare        &lt;dbl&gt; 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 51.8625,…
+## $ Cabin       &lt;chr&gt; "", "C85", "", "C123", "", "", "E46", "", "", "", "G6", "C…
+## $ Embarked    &lt;chr&gt; "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S", "S"…
+```
+
+
+---
+
+class: middle center inverse
+
+.font75[Describing Data with Numbers]
+
+---
+
+class: middle
+
+Categorical data are summarized with **counts** or **proportions**
+
+---
+
+class: middle
+
+
+
+
+
+```r
+glimpse(lapd)
+```
+
+```
+## Rows: 14,824
+## Columns: 4
+## $ job_class_title &lt;fct&gt; Police Detective II, Police Sergeant I, Police Lieuten…
+## $ employment_type &lt;fct&gt; Full Time, Full Time, Full Time, Full Time, Full Time,…
+## $ base_pay        &lt;dbl&gt; 119321.60, 113270.70, 148116.00, 78676.87, 109373.63, …
+## $ base_pay_level  &lt;chr&gt; "Greater than Median", "Greater than Median", "Greater…
+```
+
+---
+
+class: middle
+
+
+```r
+lapd %&gt;% 
+  count(employment_type)
+```
+
+```
+## # A tibble: 3 × 2
+##   employment_type     n
+##   &lt;fct&gt;           &lt;int&gt;
+## 1 Full Time       14664
+## 2 Part Time         132
+## 3 Per Event          28
+```
+
+
+---
+
+class: middle
+
+
+```r
+lapd %&gt;% 
+  count(employment_type) %&gt;% 
+  mutate(prop = n/sum(n))
+```
+
+```
+## # A tibble: 3 × 3
+##   employment_type     n    prop
+##   &lt;fct&gt;           &lt;int&gt;   &lt;dbl&gt;
+## 1 Full Time       14664 0.989  
+## 2 Part Time         132 0.00890
+## 3 Per Event          28 0.00189
+```
+
+
+---
+
+class: middle
+
+
+```r
+count(lapd, job_class_title)
+```
+
+```
+## # A tibble: 218 × 2
+##   job_class_title                       n
+##   &lt;fct&gt;                             &lt;int&gt;
+## 1 Accountant                            6
+## 2 Accounting Clerk                     21
+## 3 Accounting Clerk I                    4
+## 4 Accounting Clerk II                   1
+## 5 Administrative Clerk                283
+## 6 Architectural Drafting Technician     2
+## # … with 212 more rows
+```
+
+
+---
+
+class: middle
+
+
+```r
+count(lapd, job_class_title, sort = TRUE)
+```
+
+```
+## # A tibble: 218 × 2
+##   job_class_title         n
+##   &lt;fct&gt;               &lt;int&gt;
+## 1 Police Officer II    4042
+## 2 Police Officer III   2319
+## 3 Police Sergeant I     845
+## 4 Police Officer I      828
+## 5 Police Detective II   657
+## 6 Police Detective I    630
+## # … with 212 more rows
+```
+
+---
+
+class: middle
+
+## Review
+
+**mean** average
+
+**median** the middle value when the data are ordered
+
+**mode** value that appears the most often (local maxima for continous variables)
+
+**minimum** the lowest value
+
+**maximum** the highest value
+
+---
+class: middle
+## Mean
+
+.pull-left[
+
+```r
+summarize(lapd, 
+          mean(base_pay))
+```
+
+```
+## # A tibble: 1 × 1
+##   `mean(base_pay)`
+##              &lt;dbl&gt;
+## 1           85149.
+```
+]
+
+--
+
+.pull-right[
+
+
+```r
+mean(lapd$base_pay)
+```
+
+```
+## [1] 85149.05
+```
+
+]
+
+---
+
+class: middle
+## Median
+
+.pull-left[
+
+```r
+summarize(lapd, 
+          median(base_pay))
+```
+
+```
+## # A tibble: 1 × 1
+##   `median(base_pay)`
+##                &lt;dbl&gt;
+## 1             97601.
+```
+]
+
+--
+
+.pull-right[
+
+
+```r
+median(lapd$base_pay)
+```
+
+```
+## [1] 97600.66
+```
+
+]
+
+---
+class: middle
+
+## Minimum
+
+.pull-left[
+
+```r
+summarize(lapd, 
+          min(base_pay))
+```
+
+```
+## # A tibble: 1 × 1
+##   `min(base_pay)`
+##             &lt;dbl&gt;
+## 1          -4979.
+```
+]
+
+--
+
+.pull-right[
+
+
+```r
+min(lapd$base_pay)
+```
+
+```
+## [1] -4979.2
+```
+
+]
+
+--
+
+
+
+.footnote[
+In a similar fashion maxiumum can be found by using the `max()` function.
+]
+
+---
+
+
+class: middle
+
+## Quantiles / Percentiles / Quartiles
+
+&lt;style type="text/css"&gt;
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-7rfc{border-color:inherit;font-family:Arial, Helvetica, sans-serif !important;;font-size:28px;text-align:left;
+  vertical-align:top}
+&lt;/style&gt;
+&lt;table class="tg"&gt;
+&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th class="tg-7rfc"&gt;Quantile&lt;/th&gt;
+    &lt;th class="tg-7rfc"&gt;Percentile&lt;/th&gt;
+    &lt;th class="tg-7rfc"&gt;Special Name&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-7rfc"&gt;0.25&lt;/td&gt;
+    &lt;td class="tg-7rfc"&gt;25th&lt;/td&gt;
+    &lt;td class="tg-7rfc"&gt;First quartile&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-7rfc"&gt;0.5&lt;/td&gt;
+    &lt;td class="tg-7rfc"&gt;50th&lt;/td&gt;
+    &lt;td class="tg-7rfc"&gt;Median&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-7rfc"&gt;0.75&lt;/td&gt;
+    &lt;td class="tg-7rfc"&gt;75th&lt;/td&gt;
+    &lt;td class="tg-7rfc"&gt;Third quartile&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+
+## Quantiles
+
+
+```r
+summarize(lapd, quantile(base_pay, c(0.25, 0.50, 0.75)))
+```
+
+```
+## # A tibble: 3 × 1
+##   `quantile(base_pay, c(0.25, 0.5, 0.75))`
+##                                      &lt;dbl&gt;
+## 1                                   67266.
+## 2                                   97601.
+## 3                                  109368.
+```
+
+
+
+
+We would expect 25% of the data to be less than 67265.5475. 
+
+
+---
+
+
+class: middle 
+
+We can get multiple summaries with one `summarize()` function.
+
+
+```r
+summarize(lapd,
+          mean(base_pay),
+          median(base_pay))
+```
+
+```
+## # A tibble: 1 × 2
+##   `mean(base_pay)` `median(base_pay)`
+##              &lt;dbl&gt;              &lt;dbl&gt;
+## 1           85149.             97601.
+```
+
+Note how the variables names in this table is not easy to read. 
+
+---
+
+class: middle 
+
+In order to display the variable names more legibly in the output, we can assign variable names to numerical summaries (e.g. `mean_base_pay`).
+
+
+```r
+summarize(lapd,
+          mean_base_pay = mean(base_pay),
+          med_base_pay = median(base_pay))
+```
+
+```
+## # A tibble: 1 × 2
+##   mean_base_pay med_base_pay
+##           &lt;dbl&gt;        &lt;dbl&gt;
+## 1        85149.       97601.
+```
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "pygments",
+"highlightLines": true,
+"highlightLanguage": "r"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
