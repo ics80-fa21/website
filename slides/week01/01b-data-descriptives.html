@@ -171,7 +171,7 @@ nrow(bad_drivers)
 
 ---
 
-class: center
+class: center  d
 
 ## Getting to Know the Data Frame in Action
 
@@ -327,6 +327,8 @@ Not everything represented by numbers represents a numeric quantity. e.g. Studen
 
 ---
 
+class: middle
+
 ## Variables
 
 Variables such as `chocolate`, `fruity`, and `class_year` (first-year, sophomore, junior, senior) are __categorical variables__. 
@@ -408,32 +410,6 @@ class: middle
 class: inverse middle
 
 As a data scientist it is .font30[**your**] job to check the type(s) of data that you are working with. Do .font30[**not**]  assume you will work with clean data frames, with clean names, labels, and types.
-
----
-
-
-
-
-```r
-glimpse(titanic_train)
-```
-
-```
-## Rows: 891
-## Columns: 12
-## $ PassengerId &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,…
-## $ Survived    &lt;int&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1…
-## $ Pclass      &lt;int&gt; 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 2, 3, 3…
-## $ Name        &lt;chr&gt; "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl…
-## $ Sex         &lt;chr&gt; "male", "female", "female", "female", "male", "male", "mal…
-## $ Age         &lt;dbl&gt; 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 39, 14, …
-## $ SibSp       &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 0, 1, 0…
-## $ Parch       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0…
-## $ Ticket      &lt;chr&gt; "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37…
-## $ Fare        &lt;dbl&gt; 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 51.8625,…
-## $ Cabin       &lt;chr&gt; "", "C85", "", "C123", "", "", "E46", "", "", "", "G6", "C…
-## $ Embarked    &lt;chr&gt; "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S", "S"…
-```
 
 
 ---
@@ -685,8 +661,7 @@ In a similar fashion maxiumum can be found by using the `max()` function.
 
 ---
 
-
-class: middle
+class: middle center
 
 ## Quantiles / Percentiles / Quartiles
 
@@ -729,6 +704,7 @@ class: middle
 
 ---
 
+class: middle
 
 ## Quantiles
 

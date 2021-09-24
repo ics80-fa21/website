@@ -135,7 +135,7 @@ nrow(bad_drivers)
 
 ---
 
-class: center
+class: center  d
 
 ## Getting to Know the Data Frame in Action
 
@@ -237,6 +237,8 @@ Not everything represented by numbers represents a numeric quantity. e.g. Studen
 
 ---
 
+class: middle
+
 ## Variables
 
 Variables such as `chocolate`, `fruity`, and `class_year` (first-year, sophomore, junior, senior) are __categorical variables__. 
@@ -288,16 +290,6 @@ class: middle
 class: inverse middle
 
 As a data scientist it is .font30[**your**] job to check the type(s) of data that you are working with. Do .font30[**not**]  assume you will work with clean data frames, with clean names, labels, and types.
-
----
-
-```{r echo = FALSE}
-library(titanic)
-```
-
-```{r}
-glimpse(titanic_train)
-```
 
 
 ---
@@ -466,8 +458,7 @@ In a similar fashion maxiumum can be found by using the `max()` function.
 
 ---
 
-
-class: middle
+class: middle center
 
 ## Quantiles / Percentiles / Quartiles
 
@@ -510,6 +501,7 @@ class: middle
 
 ---
 
+class: middle
 
 ## Quantiles
 

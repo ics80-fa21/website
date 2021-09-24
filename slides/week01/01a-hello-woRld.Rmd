@@ -33,14 +33,16 @@ class: center middle
         alt="A headshot of a woman with curly, short, ear-length hair with green eyes and red lipstick."
         style="width:215px; margin-top:20px; border: 3px solid #BA4A00; padding: 10px;">
         
-
+Mine Dogucu  
 Assistant Professor of Teaching 
 <br>
 Department of Statistics 
 
+.large[`r fontawesome::fa(name = "university")`] <a href = "https://www.introdata.science/people.html">M 9 - 10 am, F 4 - 5 pm</a>  
+.large[`r fontawesome::fa(name = "envelope")`] <a href = "mailto:mdogucu@uci.edu">mdogucu@uci.edu</a>  
 .large[`r fontawesome::fa(name = "twitter")`] <a href = "http://twitter.com/MineDogucu">MineDogucu</a>  
 .large[`r fontawesome::fa(name = "github")`] <a href = "http://github.com/mdogucu">mdogucu</a>  
-.large[`r fontawesome::fa(name = "link")`] <a href = "http://minedogucu.com">minedogucu.com</a>
+
 
 ---
 
@@ -51,12 +53,13 @@ class: center middle
         alt="A woman with curly, dark long hair and brown lipstick."
         style="width:215px; margin-top:20px; border: 3px solid #BA4A00; padding: 10px;">
         
-
+Alicia Becerra Romero  
 PhD Student
 <br>
 Department of Statistics 
 
-
+.large[`r fontawesome::fa(name = "university")`] <a href = "https://www.introdata.science/people.html">Tu 4 - 5 pm, Th 4:30 - 5:30 pm</a>  
+.large[`r fontawesome::fa(name = "envelope")`] <a href = "mailto:aliciab1@uci.edu">aliciab1@uci.edu</a>  
 .large[`r fontawesome::fa(name = "github")`] <a href = "http://github.com/aliciabecerraromero">aliciabecerraromero</a>  
 
 
