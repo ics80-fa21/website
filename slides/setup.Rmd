@@ -9,6 +9,7 @@ options(
 ggplot2::theme_set(ggplot2::theme_gray(base_size = 16))
 
 knitr::opts_chunk$set(echo = TRUE, 
-                      fig.align = "center")
+                      fig.align = "center",
+                      comment="")
 ```
 
