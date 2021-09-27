@@ -418,6 +418,8 @@ Slides that you are currently looking at are also written in R Markdown. You can
 
 ---
 
+class: center middle inverse
+
 .font75[Introduction to Git and GitHub]
 
 ---
