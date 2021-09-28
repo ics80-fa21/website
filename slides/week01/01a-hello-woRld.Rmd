@@ -285,7 +285,7 @@ class: middle center
 #### RStudio Setup
 
 <video width="80%" height="45%%" align = "center" controls>
-  <source src="screencast/1-rstudio-setup.mp4" type="video/mp4">
+  <source src="screencast/01b-rstudio-setup.mp4" type="video/mp4">
 </video>
 
 ---
