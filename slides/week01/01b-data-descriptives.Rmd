@@ -338,8 +338,7 @@ glimpse(lapd)
 class: middle
 
 ```{r}
-lapd %>% 
-  count(employment_type)
+count(lapd, employment_type)
 ```
 
 
