@@ -285,7 +285,7 @@ class: middle center
 #### RStudio Setup
 
 <video width="80%" height="45%%" align = "center" controls>
-  <source src="screencast/1-rstudio-setup.mp4" type="video/mp4">
+  <source src="screencast/01b-rstudio-setup.mp4" type="video/mp4">
 </video>
 
 ---
@@ -417,6 +417,8 @@ class: middle
 Slides that you are currently looking at are also written in R Markdown. You can take a look at them on [GitHub repo](https://github.com/ics80-fa21/website/tree/main/slides) for the course website.
 
 ---
+
+class: center middle inverse
 
 .font75[Introduction to Git and GitHub]
 
