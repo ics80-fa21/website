@@ -53,7 +53,7 @@ class: middle
 ## Data Frames 
 
 
-```{r echo = FALSE, message=FALSE}
+```{r echo = FALSE, message=FALSE, warning=FALSE}
 library(magrittr)
 library(dplyr)
 library(fivethirtyeight)
@@ -72,6 +72,8 @@ candy_rankings <- candy_rankings %>%
 
 ---
 
+class: middle
+
 ## Data Frame `bad_driver`  
 
 ```{r echo=FALSE, out.width='100%'}
@@ -80,6 +82,8 @@ knitr::include_graphics('img/data-matrix-tail.png')
 ```
 
 ---
+
+class: middle
 
 ## Data Frame `bad_driver`  
 
@@ -135,7 +139,7 @@ nrow(bad_drivers)
 
 ---
 
-class: center  d
+class: center  middle
 
 ## Getting to Know the Data Frame in Action
 
@@ -336,17 +340,6 @@ class: middle
 ```{r}
 lapd %>% 
   count(employment_type)
-```
-
-
----
-
-class: middle
-
-```{r}
-lapd %>% 
-  count(employment_type) %>% 
-  mutate(prop = n/sum(n))
 ```
 
 
