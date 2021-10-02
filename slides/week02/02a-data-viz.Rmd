@@ -899,6 +899,7 @@ knitr::include_graphics("img/penguin_bill.png")
 
 
 ---
+
 class: middle inverse
 
 .font75[Visualizing a single numerical and single categorical variable.]
@@ -983,8 +984,6 @@ ggplot(penguins,
 ]
 
 
-
-
 ---
 
 class: middle
@@ -1050,7 +1049,7 @@ knitr::include_graphics("img/ggplot-summary.jpeg")
 
 ---
 
-center: middle
+class: middle
 
 ## Practice
 
