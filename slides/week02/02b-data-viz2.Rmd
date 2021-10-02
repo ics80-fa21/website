@@ -666,3 +666,8 @@ class: middle
 3. The plot type
 4. The message that the plot conveys.
 
+---
+
+class: middle
+
+Please complete the in-class activity provided to you in lecture notes.

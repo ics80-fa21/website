@@ -1004,6 +1004,35 @@ ggplot(penguins,
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 ggplot(penguins,
        aes(x = bill_length_mm))  +
+  geom_histogram() +
+  facet_wrap(~species) +
+  coord_flip() +
+  theme(text = element_text(size=20))
+
+```
+]
+
+.footnote[Note: Violin plots display densities, not counts!]
+---
+
+class: middle
+
+.pull-left[
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(penguins,
+       aes(x = species,
+           y = bill_length_mm))  +
+  geom_violin() +
+  theme(text = element_text(size=20))
+
+```
+
+]
+
+.pull-right[
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(penguins,
+       aes(x = bill_length_mm))  +
   geom_density() +
   facet_wrap(~species) +
   coord_flip() +
