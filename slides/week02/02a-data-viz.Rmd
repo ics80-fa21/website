@@ -1,5 +1,5 @@
 ---
-title: "Visaluzing Data: Part I"
+title: "Visaluzing Data: <br>Part I"
 author: "Dr. Mine Dogucu"
 output: 
   xaringan::moon_reader:
@@ -59,7 +59,9 @@ class: middle
 
 ## Review
 
-Quiz questions
+Quiz questions  
+Homework  
+Lecture on Descriptive Statistics 
 
 ---
 
@@ -94,8 +96,6 @@ Data Visualizations
 
 - are useful for exploring data
 
-
----
 
 ---
 
@@ -282,6 +282,36 @@ Discuss:
 
 ---
 
+class: middle
+
+.pull-left[
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(babies,
+       aes(x = smoke,
+           y = bwt))  +
+  geom_violin() +
+  theme(text = element_text(size=20))
+
+```
+
+]
+
+.pull-right[
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(babies,
+       aes(x = bwt))  +
+  geom_histogram() +
+  facet_wrap(~smoke) +
+  coord_flip() +
+  theme(text = element_text(size=20))
+
+```
+
+]
+
+---
+
 class: inverse middle center
 
 .font75[Visuals with Two Categorical Variables]
@@ -313,7 +343,6 @@ ggplot(data = babies,
            fill = parity)) + 
   geom_bar(position = "dodge")
 ```
-
 
 
 ---
@@ -381,7 +410,7 @@ For now we can say that this relationship looks positive and moderate.
 
 ---
 
-center: invisible 
+class: middle
 
 __gg__plot is based on __g__rammar of __g__raphics.
 
@@ -417,57 +446,6 @@ If you could speak to R in English, how would you tell R to make this plot for y
 OR
 
 If you had the data and had to draw this bar plot by hand, what would you do?
-
-]
-
-.right-panel[
-
-```{r echo=FALSE}
-ggplot(titanic, aes(x = pclass)) +
-  geom_bar()
-```
-]
-
----
-
-class: middle
-
-.left-panel[
-<br>
-<br>
-Possible ideas
-
-- Consider the data frame
-- Count number of passengers in each `pclass`
-- Put `pclass` on x-axis.
-- Put `count` on y-axis.
-- Draw the bars.
-]
-
-.right-panel[
-
-```{r echo=FALSE}
-ggplot(titanic, aes(x = pclass)) +
-  geom_bar()
-```
-]
-
----
-
-class: middle
-
-.left-panel[
-<br>
-<br>
-These ideas are all correct but some are not necessary in R
-
-- Consider the data frame
-- ~~Count number of passengers in each `pclass`~~
-- Put `pclass` on x-axis.
-- ~~Put `count` on y-axis~~.
-- Draw the bars.
-
-R will do some of these steps by default. Making a bar plot with another tool might look slightly different.
 
 ]
 
@@ -964,9 +942,52 @@ ggplot(penguins,
 
 ]
 
+---
+
+
+class: middle 
+
+.panelset[
+
+.panel[
+.panel-name[Plot]
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(penguins,
+       aes(x = species,
+           y = bill_length_mm))  +
+  geom_boxplot()
+```
+
+]
+
+.panel[
+.panel-name[English]
+
+- Create a ggplot using the `penguins` data frame.
+- Map the `species` to the x-axis and `bill_length_mm` to the y-axis. 
+- Add a layer of a box plot.
+
+]
+
+.panel[
+.panel-name[R]
+```{r eval = FALSE, fig.height=5}
+ggplot(penguins,
+       aes(x = species,
+           y = bill_length_mm))  +
+  geom_boxplot()
+```
+
+]
+
+]
+
+
 
 
 ---
+
+class: middle
 
 .pull-left[
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
@@ -984,7 +1005,7 @@ ggplot(penguins,
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 ggplot(penguins,
        aes(x = bill_length_mm))  +
-  geom_histogram() +
+  geom_density() +
   facet_wrap(~species) +
   coord_flip() +
   theme(text = element_text(size=20))
@@ -992,6 +1013,7 @@ ggplot(penguins,
 ```
 ]
 
+.footnote[Note: Violin plots display densities, not counts!]
 ---
 class: inverse middle
 
@@ -1025,4 +1047,12 @@ ggplot(penguins,
 knitr::include_graphics("img/ggplot-summary.jpeg")
 ```
 
+
+---
+
+center: middle
+
+## Practice
+
+Using either the `babies`, `titanic` or `penguins` data frame ask a question that you are interested in answering. Visualize data to get a visual answer to the question. What is the visual telling you? Note all of this down in your lecture notes.
 
