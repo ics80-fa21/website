@@ -378,6 +378,8 @@ ggplot(penguins,
 
 ---
 
+class: middle
+
 ```{r eval = FALSE}
 ?theme
 ```
@@ -492,7 +494,7 @@ Share it with your neighbor.
 
 ---
 
-class: middle center 
+class: middle center inverse
 
 .font75[Making Accessible Visualizations]
 
@@ -500,8 +502,80 @@ class: middle center
 
 class: middle
 
-Color selection
+[Color blindness simulation](https://www.color-blindness.com/coblis-color-blindness-simulator/): red-blind/protanopia
 
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/red-blind.png")
+```
+
+---
+
+class: middle
+
+[Color blindness simulation](https://www.color-blindness.com/coblis-color-blindness-simulator/): green-blind/deuteranopia
+
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/green-blind.png")
+```
+
+
+---
+
+class: middle
+
+[Color blindness simulation](https://www.color-blindness.com/coblis-color-blindness-simulator/): blue-blind/tritanopia
+
+```{r echo=FALSE, out.width="60%"}
+knitr::include_graphics("img/blue-blind.png")
+```
+---
+
+class: middle 
+
+```{r}
+palette.colors(palette = "Okabe-Ito")
+```
+
+[Okabe-Ito color palette](https://jfly.uni-koeln.de/color/) allows us to make figures that are colorblind friendly.
+You can use the HEX code printed for selecting colors.
+---
+
+class: middle
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species,
+           color = species)) +
+  geom_point(size = 4) +
+  facet_grid(species~.) +
+  scale_color_manual(values = #<<
+                      c("#E69F00", #<<
+                        "#009E73", #<<
+                        "#56B4E9")) #<<
+  
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE, fig.height=5, warning = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species,
+           color = species)) +
+  geom_point(size = 4) +
+  facet_grid(species~.) +
+  scale_color_manual(values = 
+                      c("#E69F00",
+                        "#009E73",
+                        "#56B4E9"))
+```
+
+]
 
 ---
 
