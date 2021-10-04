@@ -1070,6 +1070,138 @@ ggplot(penguins,
 ]
 
 ---
+class: middle inverse
+
+.font75[Considering More Than Two Variables]
+
+---
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           color = species)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           color= species))  +
+  geom_point()
+```
+
+]
+
+
+---
+.left-panel[
+```{r eval = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species))  +
+  geom_point()
+```
+
+]
+
+---
+
+
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species))  +
+  geom_point()
+```
+
+]
+
+---
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species,
+           color = species)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species,
+           color = species))  +
+  geom_point()
+```
+
+]
+
+
+---
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species,
+           color = species,
+           size = body_mass_g)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           shape = species,
+           color = species,
+           size = body_mass_g))  +
+  geom_point()
+```
+]
+---
 
 ```{r echo = FALSE, out.width ="95%"}
 knitr::include_graphics("img/ggplot-summary.jpeg")
@@ -1083,4 +1215,3 @@ class: middle
 ## Practice
 
 Using either the `babies`, `titanic` or `penguins` data frame ask a question that you are interested in answering. Visualize data to get a visual answer to the question. What is the visual telling you? Note all of this down in your lecture notes.
-
