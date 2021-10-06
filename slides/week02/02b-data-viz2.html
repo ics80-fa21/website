@@ -340,6 +340,17 @@ ggplot(penguins,
 
 class: middle
 
+## code style
+
+[The tidyverse style guide](https://style.tidyverse.org/ggplot2.html) has the following convention for writing ggplot2 code.
+
+Similar to the piper operator`%&gt;%`, the plus sign for adding layers `+` always has a space before it and is followed by a new line. 
+
+The new line is indented by two spaces. RStudio does this automatically for you. 
+
+---
+class: middle
+
 [Top Ten Dos and Don't for Charts and Graphs](https://guides.lib.uci.edu/datavis/do)
 
 ---
@@ -350,6 +361,19 @@ Check out [the ggplot flipbook](https://evamaerey.github.io/ggplot_flipbook/ggpl
 Find your favorite new function/feature. 
 Share it with your neighbor.
 
+
+---
+
+class: middle 
+
+## ggplot extensions
+
+- [`patchwork`](https://patchwork.data-imaginist.com/) combining plots into a single plot
+- [`gganimate`](https://gganimate.com/) animated graphics
+- [`ggthemes`](https://rafalab.github.io/dsbook/ggplot2.html#add-on-packages) additional set of themes
+- [`ggtext`](https://wilkelab.org/ggtext/) improved text rendering support for ggplot2
+
+There are [more extensions](https://exts.ggplot2.tidyverse.org/gallery/)
 
 ---
 
@@ -391,10 +415,12 @@ palette.colors(palette = "Okabe-Ito")
 ```
 
 ```
-        black        orange       skyblue   bluishgreen        yellow 
-    "#000000"     "#E69F00"     "#56B4E9"     "#009E73"     "#F0E442" 
-         blue    vermillion reddishpurple          gray 
-    "#0072B2"     "#D55E00"     "#CC79A7"     "#999999" 
+        black        orange       skyblue 
+    "#000000"     "#E69F00"     "#56B4E9" 
+  bluishgreen        yellow          blue 
+    "#009E73"     "#F0E442"     "#0072B2" 
+   vermillion reddishpurple          gray 
+    "#D55E00"     "#CC79A7"     "#999999" 
 ```
 
 [Okabe-Ito color palette](https://jfly.uni-koeln.de/color/) allows us to make figures that are colorblind friendly.
