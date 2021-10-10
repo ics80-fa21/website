@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
     <script src="03b-data-wrangle2_files/header-attrs-2.11/header-attrs.js"></script>
+    <link href="03b-data-wrangle2_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="03b-data-wrangle2_files/panelset-0.2.6/panelset.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
   </head>
   <body>
@@ -44,6 +46,7 @@ class: middle
 
 - Review aggregating data
 - Aggregating group data
+- Data joins
 - Lots of data wrangling practice
 
 ---
@@ -313,10 +316,520 @@ lapd %&gt;%
 Note that `n()` does not take any arguments.
 
 ---
+class: middle
+
+&lt;img src="img/data_joins.png" width="340" style="display: block; margin: auto;" /&gt;
+
+.font15[Image from [R for Data Science book](https://r4ds.had.co.nz/index.html) licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License](https://creativecommons.org/licenses/by-nc-nd/3.0/us/)] 
+
+---
 
 class: middle
 
+## Inner Join
+
+&lt;img src="img/inner_join.png" width="1056" style="display: block; margin: auto;" /&gt;
+
+.font15[Image from [R for Data Science book](https://r4ds.had.co.nz/index.html) licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License](https://creativecommons.org/licenses/by-nc-nd/3.0/us/)] 
+
+---
+
+
+class: middle
+
+#### Outer Joins
+
+&lt;img src="img/outer_joins.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+.font15[Image from [R for Data Science book](https://r4ds.had.co.nz/index.html) licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License](https://creativecommons.org/licenses/by-nc-nd/3.0/us/)] 
+
+---
+
+class: middle
+
+## Data Joins
+
+&lt;img src="img/join_venn.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+.font15[Image from [R for Data Science book](https://r4ds.had.co.nz/index.html) licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License](https://creativecommons.org/licenses/by-nc-nd/3.0/us/)] 
+
+---
+
+.panelset[
+.panel[
+.panel-name[artists]
+
+
+```r
+artists
+```
+
+```
+# A tibble: 4 × 2
+  name          followers
+  &lt;chr&gt;             &lt;dbl&gt;
+1 Beyoncé        24757958
+2 Taylor Swift   33098116
+3 Ariana Grande  51807131
+4 Drake          50252529
+```
+
+
+]
+
+.panel[
+.panel-name[songs]
+
+
+```r
+songs
+```
+
+```
+# A tibble: 5 × 4
+  name          song_name                            album_name  song_popularity
+  &lt;chr&gt;         &lt;chr&gt;                                &lt;chr&gt;                 &lt;dbl&gt;
+1 Beyoncé       Savage Remix (feat. Beyoncé)         Savage Rem…              83
+2 Taylor Swift  cardigan                             folklore                 85
+3 Drake         Laugh Now Cry Later (feat. Lil Durk) Laugh Now …              95
+4 Beyoncé       Halo                                 I AM…SASHA…              NA
+5 Ariana Grande Stuck with U (with Justin Bieber)    Stuck with…              NA
+```
+
+
+]
+
+.panel[
+.panel-name[albums]
+
+
+```r
+albums
+```
+
+```
+# A tibble: 4 × 2
+  album_name                           album_release_date
+  &lt;chr&gt;                                &lt;date&gt;            
+1 Savage Remix (feat. Beyoncé)         2020-04-29        
+2 I AM…SASHA FIERCE                    2008-11-14        
+3 Stuck with U                         2020-05-08        
+4 Laugh Now Cry Later (feat. Lil Durk) 2020-08-14        
+```
+
+]
+]
+
+---
+
+class: middle
+
+&lt;img src="img/data_joins_spotify.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: middle
+
+## Join Functions
+
+`something_join(x, y)` All the join functions in dplyr package are in this fashion where x represents the first data frame and y represents the second data frame.
+
+
+
+---
+
+.panelset[
+.panel[
+
+.panel-name[x]
+
+
+```r
+songs
+```
+
+```
+# A tibble: 5 × 4
+  name          song_name                            album_name  song_popularity
+  &lt;chr&gt;         &lt;chr&gt;                                &lt;chr&gt;                 &lt;dbl&gt;
+1 Beyoncé       Savage Remix (feat. Beyoncé)         Savage Rem…              83
+2 Taylor Swift  cardigan                             folklore                 85
+3 Drake         Laugh Now Cry Later (feat. Lil Durk) Laugh Now …              95
+4 Beyoncé       Halo                                 I AM…SASHA…              NA
+5 Ariana Grande Stuck with U (with Justin Bieber)    Stuck with…              NA
+```
+
+
+]
+
+.panel[
+
+.panel-name[y]
+
+
+```r
+albums
+```
+
+```
+# A tibble: 4 × 2
+  album_name                           album_release_date
+  &lt;chr&gt;                                &lt;date&gt;            
+1 Savage Remix (feat. Beyoncé)         2020-04-29        
+2 I AM…SASHA FIERCE                    2008-11-14        
+3 Stuck with U                         2020-05-08        
+4 Laugh Now Cry Later (feat. Lil Durk) 2020-08-14        
+```
+
+
+]
+
+.panel[
+
+.panel-name[left_join()]
+
+
+```r
+left_join(songs, albums, by = "album_name")
+```
+
+```
+# A tibble: 5 × 5
+  name          song_name       album_name      song_popularity album_release_d…
+  &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;                     &lt;dbl&gt; &lt;date&gt;          
+1 Beyoncé       Savage Remix (… Savage Remix (…              83 2020-04-29      
+2 Taylor Swift  cardigan        folklore                     85 NA              
+3 Drake         Laugh Now Cry … Laugh Now Cry …              95 2020-08-14      
+4 Beyoncé       Halo            I AM…SASHA FIE…              NA 2008-11-14      
+5 Ariana Grande Stuck with U (… Stuck with U                 NA 2020-05-08      
+```
+
+]
+
+]
+
+`left_join()` includes all rows from x
+
+
+
+---
+
+.panelset[
+.panel[
+
+.panel-name[x]
+
+
+```r
+songs
+```
+
+```
+# A tibble: 5 × 4
+  name          song_name                            album_name  song_popularity
+  &lt;chr&gt;         &lt;chr&gt;                                &lt;chr&gt;                 &lt;dbl&gt;
+1 Beyoncé       Savage Remix (feat. Beyoncé)         Savage Rem…              83
+2 Taylor Swift  cardigan                             folklore                 85
+3 Drake         Laugh Now Cry Later (feat. Lil Durk) Laugh Now …              95
+4 Beyoncé       Halo                                 I AM…SASHA…              NA
+5 Ariana Grande Stuck with U (with Justin Bieber)    Stuck with…              NA
+```
+
+
+]
+
+.panel[
+
+.panel-name[y]
+
+
+```r
+albums
+```
+
+```
+# A tibble: 4 × 2
+  album_name                           album_release_date
+  &lt;chr&gt;                                &lt;date&gt;            
+1 Savage Remix (feat. Beyoncé)         2020-04-29        
+2 I AM…SASHA FIERCE                    2008-11-14        
+3 Stuck with U                         2020-05-08        
+4 Laugh Now Cry Later (feat. Lil Durk) 2020-08-14        
+```
+
+
+]
+
+.panel[
+
+.panel-name[right_join()]
+
+
+```r
+right_join(songs, albums, by = "album_name")
+```
+
+```
+# A tibble: 4 × 5
+  name          song_name       album_name      song_popularity album_release_d…
+  &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;                     &lt;dbl&gt; &lt;date&gt;          
+1 Beyoncé       Savage Remix (… Savage Remix (…              83 2020-04-29      
+2 Drake         Laugh Now Cry … Laugh Now Cry …              95 2020-08-14      
+3 Beyoncé       Halo            I AM…SASHA FIE…              NA 2008-11-14      
+4 Ariana Grande Stuck with U (… Stuck with U                 NA 2020-05-08      
+```
+
+]
+
+]
+
+`right_join()` includes all rows from `y`
+
+---
+
+.panelset[
+.panel[
+
+.panel-name[x]
+
+
+```r
+songs
+```
+
+```
+# A tibble: 5 × 4
+  name          song_name                            album_name  song_popularity
+  &lt;chr&gt;         &lt;chr&gt;                                &lt;chr&gt;                 &lt;dbl&gt;
+1 Beyoncé       Savage Remix (feat. Beyoncé)         Savage Rem…              83
+2 Taylor Swift  cardigan                             folklore                 85
+3 Drake         Laugh Now Cry Later (feat. Lil Durk) Laugh Now …              95
+4 Beyoncé       Halo                                 I AM…SASHA…              NA
+5 Ariana Grande Stuck with U (with Justin Bieber)    Stuck with…              NA
+```
+
+
+]
+
+.panel[
+
+.panel-name[y]
+
+
+```r
+albums
+```
+
+```
+# A tibble: 4 × 2
+  album_name                           album_release_date
+  &lt;chr&gt;                                &lt;date&gt;            
+1 Savage Remix (feat. Beyoncé)         2020-04-29        
+2 I AM…SASHA FIERCE                    2008-11-14        
+3 Stuck with U                         2020-05-08        
+4 Laugh Now Cry Later (feat. Lil Durk) 2020-08-14        
+```
+
+
+]
+
+.panel[
+
+.panel-name[inner_join()]
+
+
+```r
+inner_join(songs, albums, by = "album_name")
+```
+
+```
+# A tibble: 4 × 5
+  name          song_name       album_name      song_popularity album_release_d…
+  &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;                     &lt;dbl&gt; &lt;date&gt;          
+1 Beyoncé       Savage Remix (… Savage Remix (…              83 2020-04-29      
+2 Drake         Laugh Now Cry … Laugh Now Cry …              95 2020-08-14      
+3 Beyoncé       Halo            I AM…SASHA FIE…              NA 2008-11-14      
+4 Ariana Grande Stuck with U (… Stuck with U                 NA 2020-05-08      
+```
+
+]
+
+]
+
+`inner_join()` includes all rows that are in x **and** y
+
+---
+
+.panelset[
+.panel[
+
+.panel-name[x]
+
+
+```r
+songs
+```
+
+```
+# A tibble: 5 × 4
+  name          song_name                            album_name  song_popularity
+  &lt;chr&gt;         &lt;chr&gt;                                &lt;chr&gt;                 &lt;dbl&gt;
+1 Beyoncé       Savage Remix (feat. Beyoncé)         Savage Rem…              83
+2 Taylor Swift  cardigan                             folklore                 85
+3 Drake         Laugh Now Cry Later (feat. Lil Durk) Laugh Now …              95
+4 Beyoncé       Halo                                 I AM…SASHA…              NA
+5 Ariana Grande Stuck with U (with Justin Bieber)    Stuck with…              NA
+```
+
+
+]
+
+.panel[
+
+.panel-name[y]
+
+
+```r
+albums
+```
+
+```
+# A tibble: 4 × 2
+  album_name                           album_release_date
+  &lt;chr&gt;                                &lt;date&gt;            
+1 Savage Remix (feat. Beyoncé)         2020-04-29        
+2 I AM…SASHA FIERCE                    2008-11-14        
+3 Stuck with U                         2020-05-08        
+4 Laugh Now Cry Later (feat. Lil Durk) 2020-08-14        
+```
+
+
+]
+
+.panel[
+
+.panel-name[full_join()]
+
+
+```r
+full_join(songs, albums, by = "album_name")
+```
+
+```
+# A tibble: 5 × 5
+  name          song_name       album_name      song_popularity album_release_d…
+  &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;                     &lt;dbl&gt; &lt;date&gt;          
+1 Beyoncé       Savage Remix (… Savage Remix (…              83 2020-04-29      
+2 Taylor Swift  cardigan        folklore                     85 NA              
+3 Drake         Laugh Now Cry … Laugh Now Cry …              95 2020-08-14      
+4 Beyoncé       Halo            I AM…SASHA FIE…              NA 2008-11-14      
+5 Ariana Grande Stuck with U (… Stuck with U                 NA 2020-05-08      
+```
+
+]
+
+]
+
+`full_join()` includes all rows that are in x **or** y
+
+---
+
+
+.panelset[
+.panel[
+.panel-name[artists]
+
+
+```r
+artists
+```
+
+```
+# A tibble: 4 × 2
+  name          followers
+  &lt;chr&gt;             &lt;dbl&gt;
+1 Beyoncé        24757958
+2 Taylor Swift   33098116
+3 Ariana Grande  51807131
+4 Drake          50252529
+```
+
+
+]
+
+.panel[
+.panel-name[songs]
+
+
+```r
+songs
+```
+
+```
+# A tibble: 5 × 4
+  name          song_name                            album_name  song_popularity
+  &lt;chr&gt;         &lt;chr&gt;                                &lt;chr&gt;                 &lt;dbl&gt;
+1 Beyoncé       Savage Remix (feat. Beyoncé)         Savage Rem…              83
+2 Taylor Swift  cardigan                             folklore                 85
+3 Drake         Laugh Now Cry Later (feat. Lil Durk) Laugh Now …              95
+4 Beyoncé       Halo                                 I AM…SASHA…              NA
+5 Ariana Grande Stuck with U (with Justin Bieber)    Stuck with…              NA
+```
+
+
+]
+
+.panel[
+.panel-name[albums]
+
+
+```r
+albums
+```
+
+```
+# A tibble: 4 × 2
+  album_name                           album_release_date
+  &lt;chr&gt;                                &lt;date&gt;            
+1 Savage Remix (feat. Beyoncé)         2020-04-29        
+2 I AM…SASHA FIERCE                    2008-11-14        
+3 Stuck with U                         2020-05-08        
+4 Laugh Now Cry Later (feat. Lil Durk) 2020-08-14        
+```
+
+]
+
+.panel[
+.panel-name[combined]
+
+
+```r
+full_join(artists, songs, by = "name") %&gt;% 
+  full_join(albums, by = "album_name")
+```
+
+```
+# A tibble: 5 × 6
+  name          followers song_name  album_name song_popularity album_release_d…
+  &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                &lt;dbl&gt; &lt;date&gt;          
+1 Beyoncé        24757958 Savage Re… Savage Re…              83 2020-04-29      
+2 Beyoncé        24757958 Halo       I AM…SASH…              NA 2008-11-14      
+3 Taylor Swift   33098116 cardigan   folklore                85 NA              
+4 Ariana Grande  51807131 Stuck wit… Stuck wit…              NA 2020-05-08      
+5 Drake          50252529 Laugh Now… Laugh Now…              95 2020-08-14      
+```
+
+
+]
+
+
+]
+
+---
+class: middle
+
 Complete the questions provided to you in the lecture notes.
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
