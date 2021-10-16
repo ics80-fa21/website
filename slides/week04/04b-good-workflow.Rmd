@@ -336,6 +336,28 @@ knitr::include_graphics("img/git-collab.015.jpeg")
 
 ---
 
+## Opening an issue
+
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/create-issue.png")
+```
+
+We can create an **issue** to keep a list of mistakes to be fixed, ideas to check with teammates, or note a to-do task. You can assign tasks to yourself or teammates. 
+
+---
+
+## Closing an issue
+
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("img/issue-number.png")
+```
+
+If you are working on an issue, it makes sense to refer to issue number in your commit message (e.g. "add first draft of alternate texts for #4"). 
+If your commit resolves the issue then you can use key words such as "fixes #4" or "closes #4" to close the issue. 
+Issues can also be manually closed.
+
+---
+
 It is also a good practice to save session information as package versions change, in order to be able to reproduce results from an analysis we need to know under what technical conditions the analysis was conducted.
 
 ```{r}
