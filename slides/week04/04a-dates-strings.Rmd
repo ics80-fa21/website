@@ -363,6 +363,8 @@ str(mdy(arrival))
 
 ---
 
+class: middle
+
 ```{r}
 mdy("11012005")
 ```
@@ -431,7 +433,11 @@ class: middle
 
 `POSIXlt`
 
+These represent date-time vectors in R.
+
 ---
+
+class: middle
 
 ## Including time zones
 
@@ -493,6 +499,8 @@ since_titanic
 
 
 ---
+
+class: middle
 
 ## Durations
 
@@ -809,6 +817,8 @@ class: inverse middle
 .font75[str_replace()]
 
 ---
+
+class: middle
 
 ```{r}
 str_replace(first_episode_desc, "Monica", "Monika")
