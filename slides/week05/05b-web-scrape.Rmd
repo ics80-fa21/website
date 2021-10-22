@@ -37,7 +37,9 @@ class: middle
 ## Review
 
 Quiz  
-GitHub collaboration
+GitHub collaboration 
+
+Note that this week's repo is blank because now you are in full charge of creating files.
 
 ---
 
@@ -471,7 +473,7 @@ class: middle
 
 - Web pages change structures.
 
-- Only way of reproducing the same results may be from the `csv` files that you write.
+- Only way of reproducing the same results may be from the `.csv` files that you write.
 
 ---
 
