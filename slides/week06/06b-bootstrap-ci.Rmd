@@ -351,14 +351,7 @@ If we were to take considerable large number of samples (we only had one sample)
 
 - More on constructing confidence intervals (and hypothesis testing) in other statistics classes. In this class, we will focus on using and interpreting confidence intervals. R will do the calculations for us. 
 
----
 
-```{r}
-data %>%
-  specify(rifle ~ sex, success = "Yes") %>%
-generate(reps = 1000, type = "bootstrap") %>%
-calculate (stat = "diff in props", order = c("Male", "Female"))
 
-```
 
 
