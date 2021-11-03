@@ -38,6 +38,25 @@ Quiz
 
 ---
 
+class: middle
+
+## Confidence Intervals
+
+Confidence Interval = `\(\text{point estimate} \pm \text{margin of error}\)`
+
+[Garfield example](https://www.google.com/url?sa=i&amp;url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F213850682297038171%2F&amp;psig=AOvVaw3CB79ib3mt4FZLTVyupZCj&amp;ust=1636055878179000&amp;source=images&amp;cd=vfe&amp;ved=0CAsQjRxqFwoTCOD9rZ39_PMCFQAAAAAdAAAAABAI)
+
+CI = (-40, 200) 
+
+point estimate = 80
+margin of error = 120
+
+`\(80 \pm 120\)`
+
+We can construct confidence intervals using theory (covered in STATS 7, 8, 67) or simulation (covered in ICS 80).
+---
+
+
 ## Data
 
 
@@ -63,7 +82,7 @@ glimpse(lapd)
 ```
 Rows: 14,824
 Columns: 1
-$ base_pay &lt;dbl&gt; 119321.60, 113270.70, 148116.00, 78676.87, 109373.63, 95001.7~
+$ base_pay &lt;dbl&gt; 119321.60, 113270.70, 148116.00, 78676.87, 109373.63, 95001.7…
 ```
 
 ---
@@ -259,7 +278,7 @@ boot %&gt;%
 ```
 
 ```
-# A tibble: 1 x 2
+# A tibble: 1 × 2
   lower_bound upper_bound
         &lt;dbl&gt;       &lt;dbl&gt;
 1      60747.     104091.
