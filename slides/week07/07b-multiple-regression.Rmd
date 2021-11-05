@@ -1,5 +1,5 @@
 ---
-title: "Simulation Based Confidence Intervals"
+title: "Multiple Linear Regression"
 author: "Dr. Mine Dogucu"
 output: 
   xaringan::moon_reader:
@@ -20,6 +20,8 @@ class: title-slide
 ```{r echo = FALSE, message = FALSE}
 library(tidyverse)
 library(gridExtra)
+library(openintro)
+library(broom)
 options(scipen = 999)
 ```
 
@@ -44,333 +46,154 @@ Quiz
 
 class: middle
 
-## Confidence Intervals
+<div align = "center">
 
-Confidence Interval = $\text{point estimate} \pm \text{margin of error}$
+| y | Response    | Birth weight | Numeric |
+|---|-------------|-----------------|---------|
+| x | Explanatory | Smoke           | Categorical |
 
-[Garfield example](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F213850682297038171%2F&psig=AOvVaw3CB79ib3mt4FZLTVyupZCj&ust=1636055878179000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOD9rZ39_PMCFQAAAAAdAAAAABAI)
-
-CI = (-40, 200) 
-
-point estimate = 80
-margin of error = 120
-
-$80 \pm 120$
-
-We can construct confidence intervals using theory (covered in STATS 7, 8, 67) or simulation (covered in ICS 80).
----
-
-
-## Data
-
-```{r echo=FALSE, message=FALSE}
-lapd <- read_csv(here::here("slides/data/Police_Payroll.csv"))
-```
-
-
-```{r message = FALSE, warning = FALSE}
-lapd <- lapd %>% 
-  janitor::clean_names() %>% 
-  filter(year == 2018) %>% 
-  select(base_pay)
-```
-
---
-We will be using payroll data from Los Angeles Police Department (LAPD) from 2018.
-
-
-```{r echo = TRUE}
-glimpse(lapd)   
-```
 
 ---
 
-## Population Distribution
+## Notation
 
+$y_i = \beta_0 +\beta_1x_i + \epsilon_i$
 
-```{r echo=FALSE,fig.align='center'}
-lapd %>% 
-  ggplot(aes(x = base_pay)) +
-  geom_histogram(binwidth = 5000) +
-  scale_x_continuous(labels = scales::comma_format()) +
-  theme_bw() +
-  theme(text = element_text(size = 20)) 
-```
+$\beta_0$ is y-intercept  
+$\beta_1$ is slope  
+$\epsilon_i$ is error/residual  
+$i = 1, 2, ...n$ identifier for each point
+
 
 ---
-
-## True Median
 
 ```{r}
-median(lapd$base_pay)
-```
-This is a **population parameter**. We often do not know population parameters but we can **estimate** them. Estimation requires some sample data.
-
----
-
-### Sample 1
-
-
-```{r echo=FALSE}
-set.seed(12345)
-sample_1 <- sample_n(lapd, 10)
-sample_1$base_pay
+model_s <- lm(bwt ~ smoke, data = babies)
+tidy(model_s)
 ```
 
-Median of sample 1 is `r as.double(median(sample_1$base_pay))`.
+
 
 --
 
-### Sample 2
+$\hat {y}_i = b_0 + b_1 x_i$
 
+$\hat {\text{bwt}_i} = b_0 + b_1 \text{ smoke}_i$
 
-```{r echo=FALSE}
-
-sample_2 <- sample_n(lapd, 10)
-sample_2$base_pay
-```
-
-Median of sample 2 is `r as.double(median(sample_2$base_pay))`.
+$\hat {\text{bwt}_i} = 123 + (-8.94\text{ smoke}_i)$
 
 ---
 
-### Sample 3
-
-
-```{r echo=FALSE}
-
-sample_3 <- sample_n(lapd, 10)
-sample_3$base_pay
-```
-
-Median of sample 3 is `r as.double(median(sample_3$base_pay))`.
-
---
-
-### Sample 4
-
-
-```{r echo=FALSE}
-set.seed(12345)
-sample_4 <- sample_n(lapd, 10)
-sample_4$base_pay
-```
-
-Median of sample 4 is `r as.double(median(sample_4$base_pay))`.
-
-
----
-
-## Sampling Variability
-
-- Note that the median varies from sample to sample. Each sample's median is not necessarily the population median we are trying to estimate. There is variance of sample medians. 
-
---
-
-- In real life taking samples from the population is costly. We often have only have one sample that we can use to estimate the population parameter.
-
---
-
-- How can we take sampling variability into account when we only have one sample?
-
-    - There are different ways to do this. We will use **bootstrapping** in this class.
-    - If you want to learn more on estimating population parameters using sample data, I encourage you to take a statistics classes. 
-
----
-
-class: inverse middle
+class: middle
 
 .pull-left[
 
-<br>
+#### Expected bwt for a baby with a non-smoker mother
 
-.font75[Bootstrapping]
+$\hat {\text{bwt}_i} = 123 + (-8.94\text{ smoke}_i)$
+
+$\hat {\text{bwt}_i} = 123 + (-8.94\times 0)$
+
+$\hat {\text{bwt}_i} = 123$
+
+$E[bwt_i | smoke_i = 0] = b_0$
+
 
 ]
+
+--
 
 .pull-right[
-```{r fig.align='center', echo=FALSE, out.width="40%"}
-knitr::include_graphics("img/bootstrap.jpg")
-```
+#### Expected bwt for a baby with a smoker mother
+
+$\hat {\text{bwt}_i} = 123 + (-8.94\text{ smoke}_i)$
+
+$\hat {\text{bwt}_i} = 123 + (-8.94\times 1)$
+
+$\hat {\text{bwt}_i} = 114.06$
+
+$E[bwt_i | smoke_i = 1] = b_0 + b_1$
+
 ]
----
-
-
-
-```{r fig.align='center', echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/bootstrap_step0.png")
-```
 
 ---
-
-```{r fig.align='center', echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/bootstrap_step1.png")
-```
-
----
-
-```{r fig.align='center', echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/bootstrap_step2.png")
-```
-
----
-
-
-```{r fig.align='center', echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/bootstrap_step3.png")
-```
-
----
-
-## Random Sample ( $n$ = 50)
-
-
 
 ```{r}
-library(infer) # for bootstrap related functions
-set.seed(12345)
-lapd_sample <- sample_n(lapd, 20)
-
-lapd_sample$base_pay
+confint(model_s)
 ```
 
+Note that the confidence interval for the "slope" does not contain 0 and all the values in the interval are negative. 
 
 ---
 
-## Bootstrapping
-
-
-```{r}
-boot <- lapd_sample %>% 
-  specify(response = base_pay) %>% 
-  generate(reps = 1000, type = "bootstrap") %>% 
-  calculate(stat = "median")
+```{r echo = FALSE, message = FALSE}
+library(tidyverse)
+library(openintro)
+library(broom)
+theme_set(theme_gray(base_size = 18))
 ```
 
----
-
-class: center middle
-
-<video width="80%" height="45%%" align = "center" controls>
-  <source src="screencast/7-infer-bootstrap.mp4" type="video/mp4">
-</video>
----
-
-```{r fig.align="center",out.width="30%"}
-visualize(boot) +
-  scale_x_continuous(labels = scales::comma_format()) +
-  theme_bw() +
-  theme(text = element_text(size = 20)) 
-```
-
----
-
-## 95% Confidence Interval
-
-We can construct the 95% confidence interval by calculating the 2.5th and 97.5th percentiles of the bootstrap distribution.
-
-```{r}
-boot %>% 
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
-```
-
-This confidence interval captures the true median (97600.66).
-
----
-
-class: middle 
+#### Data `babies` in `openintro` package
 
 ```{r echo = FALSE}
-ci <-
-  boot %>% 
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
-
-lower_bound <- 
-  boot %>% 
-  summarize(lower_bound = quantile(stat, 0.025)) %>%
-  pull()
-upper_bound <- 
-  boot %>% 
-  summarize(upper_bound = quantile(stat, 0.975)) %>%
-  pull()
-
-```
-
-
-
-Commonly used confidence levels in practice are 90% (blue), 95% (red), and 99 (black)%
-
-
-```{r echo = FALSE}
-
-lower_90 <- 
-  boot %>% 
-  summarize(lower_bound = quantile(stat, 0.05)) %>%
-  pull()
-
-upper_90 <- 
-  boot %>% 
-  summarize(upper_bound = quantile(stat, 0.95)) %>%
-  pull()
-
-lower_99 <- 
-  boot %>% 
-  summarize(lower_bound = quantile(stat, 0.005)) %>%
-  pull()
-
-upper_99 <- 
-  boot %>% 
-  summarize(upper_bound = quantile(stat, 0.995)) %>%
-  pull()
-
-```
-
-
-```{r fig.height=3, echo=FALSE, fig.align='center'}
-visualize(boot) +
-  geom_vline(xintercept = c(lower_bound,
-                            upper_bound), 
-             color = "red") +
-   geom_vline(xintercept = c(lower_90,
-                            upper_90), 
-             color = "blue") +
-   geom_vline(xintercept = c(lower_99,
-                            upper_99), 
-             color = "black")
+glimpse(babies)
 ```
 
 ---
 
-## Interpretation of Confidence Intervals
 
-.font50[`r fontawesome::fa("exclamation-triangle", fill = "black")`] Calculating a confidence interval does not guarantee that we will capture the true value of population parameter in the interval. 
+class: middle
 
---
+<div align = "center">
 
-If we were to take considerable large number of samples (we only had one sample) and construct 95% confidence intervals for each of the samples we would expect about 95% of the confidence intervals to capture the the true value of population parameter in the interval.
+| y | Response    | Birth weight | Numeric |
+|---|-------------|-----------------|---------|
+| $x_1$ | Explanatory | Gestation           | Numeric |
+| $x_2$ | Explanatory | Smoke           | Categorical |
+
+---
+
+## Notation
+
+$y_i = \beta_0 +\beta_1x_{1i}  + \beta_2x_{2i} + \epsilon_i$
+
+$\beta_0$ is intercept  
+$\beta_1$ is the slope for gestation   
+$\beta_2$ is the slope for smoke 
+$\epsilon_i$ is error/residual  
+$i = 1, 2, ...n$ identifier for each point
 
 
 ---
 
-## Take-Away Messages
-
-- Sample statistics $\neq$ population parameter.
-
---
-
-- Different samples can have different statistics, thus there is sampling variability.
+```{r}
+model_gs <- lm(bwt ~ gestation + smoke, data = babies)
+tidy(model_gs)
+```
 
 --
 
-- We have constructed a confidence interval to infer about a median but we could do this for mean, proportion, difference between two group means etc. 
+Expected birth weight for a baby who had 280 days of gestation with a smoker mother
 
---
+$\hat {\text{bwt}_i} = b_0 + b_1 \text{ gestation}_i + b_2 \text{ smoke}_i$
 
-- More on constructing confidence intervals (and hypothesis testing) in other statistics classes. In this class, we will focus on using and interpreting confidence intervals. R will do the calculations for us. 
+$\hat {\text{bwt}_i} = -0.932 + (0.443 \times 280) + (-8.09 \times 1)$
 
+---
 
+```{r}
+babies %>% 
+  modelr::add_predictions(model_gs) %>% 
+  select(bwt, gestation, smoke, pred)
+```
 
+---
+
+```{r}
+babies %>% 
+  modelr::add_predictions(model_gs) %>% 
+  modelr::add_residuals(model_gs) %>% 
+  select(bwt, gestation, smoke, pred, resid)
+```
 
 
