@@ -1,0 +1,319 @@
+---
+title: "Model Evaluation and Validation"
+author: "Dr. Mine Dogucu"
+output: 
+  xaringan::moon_reader:
+    css: slide-style.css
+    seal: false
+    nature:
+      ratio: 16:9
+      highlightStyle: "pygments"
+      highlightLines: true
+      highlightLanguage: "r"
+---
+
+class: title-slide
+
+```{r child = "../setup.Rmd"}
+```
+
+```{r echo = FALSE, message = FALSE, warning=FALSE}
+library(tidyverse)
+library(openintro)
+library(broom)
+library(modelr)
+theme_set(theme_gray(base_size = 18))
+options(scipen = 999)
+```
+
+<br>
+<br>
+.right-panel[ 
+
+# `r rmarkdown::metadata$title`
+## `r rmarkdown::metadata$author`
+]
+
+---
+
+class: middle
+
+## Review
+
+Quiz  
+Homework
+
+---
+
+
+```{r}
+glimpse(babies)
+```
+
+---
+
+```{r}
+model_g <- lm(bwt ~ gestation, data = babies)
+tidy(model_g)
+```
+
+---
+
+```{r}
+glance(model_g)
+```
+
+---
+
+```{r}
+glance(model_g)$r.squared
+```
+
+16% of the variation in birth weight is explained by gestation. Higher values of R squared is preferred.
+
+```{r echo = FALSE, fig.align='center', message=FALSE, warning = FALSE, fig.height = 4}
+babies %>% 
+  ggplot() +
+  aes(x = gestation, y = bwt) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) 
+    
+```
+
+---
+
+```{r echo = FALSE, fig.align='center', message=FALSE, warning = FALSE, fig.height = 4}
+babies %>% 
+  ggplot() +
+  aes(x = gestation, y = bwt) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) 
+    
+```
+
+---
+
+```{r}
+model_gsa <- lm(bwt ~ gestation + smoke + age, data = babies)
+```
+
+
+---
+
+## Adjusted R-Squared
+
+.pull-left[
+```{r}
+glance(model_g)
+```
+]
+
+.pull-right[
+```{r}
+glance(model_gsa)
+```
+]
+
+
+---
+
+```{r}
+babies %>% 
+  add_predictions(model_g) %>% 
+  add_residuals(model_g) %>% 
+  select(bwt, pred, resid)
+```
+
+
+---
+
+```{r}
+babies %>% 
+  add_predictions(model_gsa) %>% 
+  add_residuals(model_gsa) %>% 
+  select(bwt, pred, resid)
+```
+
+---
+
+## Root Mean Square Error
+
+$RMSE = \sqrt{\frac{\Sigma_{i=1}^n(y_i-\hat y_i)^2}{n}}$
+---
+
+```{r}
+modelr::rmse(model_gsa, babies)
+```
+
+```{r}
+modelr::rmse(model_g, babies)
+```
+
+---
+
+```{r}
+model_full <- lm(bwt ~ gestation + parity + age +
+                   height + weight + smoke, 
+                 data = babies)
+```
+
+```{r}
+modelr::rmse(model_full, babies)
+```
+
+```{r}
+glance(model_full)$r.squared
+```
+
+Can we keep adding all the variables and try to get an EXCELLENT model fit?
+
+---
+
+## Overfitting
+
+- We are fitting the model to sample data.
+
+- Our goal is to understand the population data.
+
+- If we make our model too perfect for our sample data, the model may not perform as well with other sample data from the population.
+
+- In this case we would be overfitting the data.
+
+- We can use **model validation** techniques.
+
+---
+
+## Splitting the Data (Train vs. Test)
+
+```{r message=FALSE}
+set.seed(12345)
+babies_split <- rsample::initial_split(babies) ## 75% to 25% split
+```
+
+--
+
+```{r}
+babies_train <- rsample::training(babies_split)
+dim(babies_train)
+```
+
+--
+
+```{r}
+babies_test <- rsample::testing(babies_split)
+dim(babies_test)
+```
+
+---
+
+```{r}
+model_gsa_train <- lm(bwt ~ gestation + smoke + age, data = babies_train)
+model_gsa_test <- lm(bwt ~ gestation + smoke + age, data = babies_test)
+```
+
+---
+
+.pull-left[
+```{r}
+glance(model_gsa_train)
+```
+]
+
+.pull-right[
+```{r}
+glance(model_gsa_test)
+```
+]
+
+
+---
+
+.pull-left[
+```{r}
+modelr::rmse(model_gsa_train, babies_train)
+```
+]
+
+.pull-right[
+```{r}
+modelr::rmse(model_gsa_test, babies_test)
+```
+]
+
+
+---
+
+class: middle inverse
+
+.font50[Evaluation of Logistic Regression Models]
+
+---
+
+class: middle
+
+```{r}
+babies <- babies %>% 
+  mutate(low_bwt = case_when(bwt < 88 ~ TRUE,
+                             bwt >= 88~ FALSE)) %>% 
+  drop_na(gestation)
+```
+
+---
+class: middle
+
+```{r}
+model_g <- glm(low_bwt ~ gestation, 
+               data = babies,
+               family = "binomial")
+```
+
+---
+class: middle
+
+```{r}
+tidy(model_g)
+```
+
+$\hat p = \frac{\exp(b_0 +b_1x)}{1+\exp(b_0 + b_1x)}$
+
+$\hat p$ when gestation is 284 = $\frac{\exp(17.5 -0.0758 \cdot 284)}{1+\exp(17.5 -0.0758 \cdot 284)} = \frac{\exp(-4.0272)}{1+ \exp(-4.0272)} = 0.01751203$
+
+---
+
+```{r}
+babies <- babies %>% 
+  add_predictions(model_g) 
+select(babies, pred) 
+```
+
+---
+
+```{r}
+babies <- babies %>% 
+  mutate(pred_p = exp(pred)/(1+exp(pred)))
+select(babies, pred, pred_p)
+```
+
+---
+
+## Cutoff 
+
+```{r}
+babies <- babies %>% 
+  mutate(pred_y = case_when(pred_p < 0.5 ~ FALSE, 
+                           pred_p >= 0.5 ~ TRUE))
+select(babies, low_bwt, pred, pred_p, pred_y)
+```
+
+---
+
+### Confusion Matrix
+
+```{r}
+janitor::tabyl(babies, low_bwt, pred_y) %>% 
+  janitor::adorn_totals(c("row", "col"))
+```
+
+**Sensitivity** (true-positive rate): 4/57 = 0.0702  
+**Specificity** (true-negative rate): 1161/1166 = 0.9957  
+**Accuracy**: (1161+4)/1223 = 0.9526
