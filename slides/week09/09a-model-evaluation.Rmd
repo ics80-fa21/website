@@ -80,18 +80,10 @@ babies %>%
     
 ```
 
----
-
-```{r echo = FALSE, fig.align='center', message=FALSE, warning = FALSE, fig.height = 4}
-babies %>% 
-  ggplot() +
-  aes(x = gestation, y = bwt) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) 
-    
-```
 
 ---
+
+class: middle
 
 ```{r}
 model_gsa <- lm(bwt ~ gestation + smoke + age, data = babies)
@@ -99,6 +91,8 @@ model_gsa <- lm(bwt ~ gestation + smoke + age, data = babies)
 
 
 ---
+
+class: middle
 
 ## Adjusted R-Squared
 
@@ -114,8 +108,11 @@ glance(model_gsa)
 ```
 ]
 
+When comparing models with multiple predictors we rely on Adjusted R-squared.
 
 ---
+
+class: middle
 
 ```{r}
 babies %>% 
@@ -127,6 +124,8 @@ babies %>%
 
 ---
 
+class: middle
+
 ```{r}
 babies %>% 
   add_predictions(model_gsa) %>% 
@@ -136,10 +135,15 @@ babies %>%
 
 ---
 
+class: middle
+
 ## Root Mean Square Error
 
 $RMSE = \sqrt{\frac{\Sigma_{i=1}^n(y_i-\hat y_i)^2}{n}}$
+
 ---
+
+class: middle
 
 ```{r}
 modelr::rmse(model_gsa, babies)
@@ -150,6 +154,8 @@ modelr::rmse(model_g, babies)
 ```
 
 ---
+
+class: middle
 
 ```{r}
 model_full <- lm(bwt ~ gestation + parity + age +
@@ -162,12 +168,14 @@ modelr::rmse(model_full, babies)
 ```
 
 ```{r}
-glance(model_full)$r.squared
+glance(model_full)$adj.r.squared
 ```
 
 Can we keep adding all the variables and try to get an EXCELLENT model fit?
 
 ---
+
+class: middle
 
 ## Overfitting
 
@@ -182,6 +190,8 @@ Can we keep adding all the variables and try to get an EXCELLENT model fit?
 - We can use **model validation** techniques.
 
 ---
+
+class: middle
 
 ## Splitting the Data (Train vs. Test)
 
@@ -206,12 +216,16 @@ dim(babies_test)
 
 ---
 
+class: middle
+
 ```{r}
 model_gsa_train <- lm(bwt ~ gestation + smoke + age, data = babies_train)
 model_gsa_test <- lm(bwt ~ gestation + smoke + age, data = babies_test)
 ```
 
 ---
+
+class: middle
 
 .pull-left[
 ```{r}
@@ -227,6 +241,8 @@ glance(model_gsa_test)
 
 
 ---
+
+class: middle
 
 .pull-left[
 ```{r}
@@ -280,6 +296,8 @@ $\hat p$ when gestation is 284 = $\frac{\exp(17.5 -0.0758 \cdot 284)}{1+\exp(17.
 
 ---
 
+class: middle
+
 ```{r}
 babies <- babies %>% 
   add_predictions(model_g) 
@@ -288,6 +306,8 @@ select(babies, pred)
 
 ---
 
+class: middle
+
 ```{r}
 babies <- babies %>% 
   mutate(pred_p = exp(pred)/(1+exp(pred)))
@@ -295,6 +315,8 @@ select(babies, pred, pred_p)
 ```
 
 ---
+
+class: middle
 
 ## Cutoff 
 
