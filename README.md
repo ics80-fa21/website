@@ -1,4 +1,4 @@
-## ICS 80
+## STATS 6
 <img src="img/ids-logo.png" alt="introdata.science logo with a human figure juggling charts, a computer, a database and a book" width="150" align = "right"/>
 
 
@@ -6,7 +6,7 @@
 ### Introduction Data Science 
 University of California Irvine 
 
-Fall 2021 
+Fall 2023 
 
 [Dr. Mine Dogucu](https://minedogucu.com)  
 
@@ -21,7 +21,7 @@ Course website is hosted at [introdata.science](https://introdata.science).
 
 **Students** if you see anything missing or broken links please feel free to file an issue in this repo or let me know. Note that this is a public repo so if you create an issue it would be publicly be available. If you are concerned about privacy you can directly email me.
 
-**Instructors** if you are planning to use any of the website design or resources (except the videos) feel free to do so but please attribute accordingly. 
+**Instructors** if you are planning to use any of the website design or resources feel free to do so but please attribute accordingly. 
 
 Everything on this website except the videos are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
