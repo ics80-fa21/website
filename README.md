@@ -6,7 +6,7 @@
 ### Introduction Data Science 
 University of California Irvine 
 
-Fall 2023 
+Fall 2021
 
 [Dr. Mine Dogucu](https://minedogucu.com)  
 
